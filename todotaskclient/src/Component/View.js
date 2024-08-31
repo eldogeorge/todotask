@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Image, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 import './Add.css'
 import { Link, useParams } from 'react-router-dom';
 import { getSingleTask } from '../Service/allAPI';
-import BASE_URL from '../Service/Base_url';
 
 function View() {
   // GSES6
@@ -31,23 +29,19 @@ function View() {
   },[])
  return (
     <Container>
-
       <Row>
         <Col>
           {
           singleTask?
           <Card className='container' style={{ backgroundColor: '#6E6E6E', fontWeight: 'bold', width: '40%' }} id='box1'>
-          {/* <Image variant="top" src={`${BASE_URL}/uploads/${singleEmployee.profile}`} roundedCircle style={{ width: '50%', borderRadius: '100%', marginLeft: '25%' }} className='text-center p-3' /> */}
           <Card.Body>
             <Card.Title><h1 className='text-center' style={{ fontWeight: 'bolder', color: '#BCFD4C' }}>{singleTask.ttask}</h1></Card.Title>
             <Card.Text>
-               <p className='text-center' style={{ fontWeight: 'bolder', color: '#BCFD4C' }}>{singleTask.dtask}</p>
             </Card.Text>
           </Card.Body>
-          {/* <Card.Body>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body> */}
+          <Card.Body>
+            <p className='text-center' style={{ fontWeight: 'bolder', color: '#BCFD4C' }}>{singleTask.dtask}</p>
+          </Card.Body>
         </Card>:
         <p>Task Not Found </p>
           }

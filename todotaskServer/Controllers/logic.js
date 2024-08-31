@@ -1,23 +1,23 @@
 // s5 to create logic
 
-const tasks = require("../Models/emsModels");
+const tasks = require("../Models/taskModels")
+
 
 // SEDS1 register logic
 // for export down module. exports 
 taskRegister = async (req, res) => {
-    // for profile```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
-    const file = req.file.filename
-    // for emsdetails
+
+    // for taskdetails
     const { ttask, dtask, status } = req.body
     // if: to check value in the server, to know to the user
     if (!ttask || !dtask || !status) {
-        res.status(404).json("All inputs are required")
+        res.status(405).json("All inputs are required")
     }
     try {//if any internet issue error
         const preTask = await tasks.findOne({ ttask })//findone async data
 
         if (preTask) {
-            res.status(403).json("Task already present")
+            res.status(412).json("Task already present")
         }
         else {
             // create object for new Tasks                                      
@@ -73,8 +73,8 @@ getSingleTask = async (req, res) => {
 toRemoveTask = async (req, res) => {
     const param = req.params.id
     try {
-        const removeEmployee = await employees.findByIdAndDelete({ _id: param })
-        res.status(200).json(removeEmployee)
+        const removeTask = await tasks.findByIdAndDelete({ _id: param })
+        res.status(200).json(removeTask)
     }
     catch (err) {
         res.status(400).json(err)
@@ -86,26 +86,19 @@ editTask = async (req, res) => {
     const id = req.params.id//or const {id}=req.params.id
    
     // for emsdetails
-    const { fname, lname, email, mobile, gender, status, location,user_profile } = req.body
-
-     // for profile
-     const file = req.file?req.file.filename:user_profile   
+    const { ttask,dtask,status } = req.body
+ 
     // if: to check value in the server, to know to the user
-    if (!fname || !lname || !email || !mobile || !gender || !status || !location) {
+    if (!ttask || !dtask || !status) {
         res.status(400).json("All inputs are required")
     }
     try{
-        const user=await employees.findOne({ _id: id })
+        const user=await tasks.findOne({ _id: id })
         if(user){
             // update all value with new data
-            user.fname=fname
-            user.lname=lname
-            user.email=email
-            user.mobile=mobile
-            user.gender=gender
+            user.ttask=ttask
+            user.dtask=dtask
             user.status=status
-            user.location=location
-            user.profile=file
 
             // save data
             user.save()

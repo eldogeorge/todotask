@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
@@ -19,8 +19,6 @@ function Add() {
   const {registerData,setRegisterData}=useContext(registerContext)
 
 
-  // ACS1 state to hold image data
-  // const [Image, setImage] = useState("")
 
   // ATS5 create navigate
   const navigate = useNavigate()
@@ -45,28 +43,11 @@ function Add() {
     // after destrut
     let { value, name } = e.target
     // sepated operation
-    setUserData({ ...userData, [name]: value })
+    setUserData({...userData, [name]: value })
   }
   // ACS12
-  // console.log(userData);
+  console.log(userData);
 
-  //ACS3 create a funcation to store image
-  // const setProfile = (e) => {
-  //   // console.log(e.target.files[0]);
-  //   setImage(e.target.files[0]);
-  // }
-
-  //ACS4 state to store preview image as URL
-  // const [preview, setPreview] = useState("")
-
-  // ACS5 to acess when it open
-  // useEffect(() => {
-  //   if (Image) {
-  //     setPreview(URL.createObjectURL(Image))//file to URL
-  //   }
-  // }, [Image])
-
-  // console.log(preview);
   //  ACS20
   // 20.1 create a funcation for submit button we need header & body
   const handleSubmit = async (e) => {
@@ -90,11 +71,10 @@ function Add() {
       toast.error('Task Description Required')
     }
     else if (status == "") {
-      toast.error('Task status Required')
+      toast.error('Task Status Required')
     }
     else {
       // 20.5 add datas in formdata using methods
-      // data.append('user_profile', Image)
       data.append('ttask', ttask)
       data.append('dtask', dtask)
       data.append('status', status)
@@ -108,10 +88,9 @@ function Add() {
         // CS7 update context
         setRegisterData(response.data)  // data means newEmployees objects in server
 
-        // alert("Employee Added")
+        // alert("Task Added")
         // ATS7 line no 127
         setUserData({
-          ...userData,
           ttask: "",
           dtask: "",
           status: ""
@@ -126,7 +105,7 @@ function Add() {
 
       }
       else {
-        // alert("Employee Already ")
+        // alert("Task Already ")
         // console.log(response.response.data);
         // ATES3
         setErrorMsg(response.response.data)
@@ -145,12 +124,10 @@ function Add() {
       </Alert> : ""
       }
       <Container>
-        <h1 className='text-center text-light'><strong> New Task To-Do <span style={{ color: '#BAFF39' }}>Employee Details</span></strong></h1>
+        <h1 className='text-center text-light'><strong> New Task To-Do <span style={{ color: '#BAFF39' }}>Task Details</span></strong></h1>
         <div className='mt-5 m-5 p-5' id='box1' style={{ fontWeight: 'bold' }}>
           <Row>
             <div>
-              {/* ACS6 to access the image */}
-              {/* <img src={preview ? preview : "https://i.postimg.cc/Mp4NRLKm/profile.jpg"} alt="" style={{ width: '25%', marginLeft: '40%' }} /> */}
             </div>
             <Col xs={12} sm={12} md={6} lg={6} xl={6} className='p-5'>
               {/* ACS8 to call funcation*/}
@@ -181,8 +158,8 @@ function Add() {
                 <Form.Select onChange={userDetails} name="status" defaultValue="Choose...">
                   <option>Select...</option>
                   {/*ACS17  */}
-                  <option value={'active'}>To-Do-Task</option>
-                  <option value={'inactive'}>Completed</option>
+                  <option value={'todotask'}>To-Do-Task</option>
+                  <option value={'completed '}>Completed</option>
                 </Form.Select>
               </Form.Group>
             </Col>

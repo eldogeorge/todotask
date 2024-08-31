@@ -4,11 +4,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { Link } from 'react-router-dom';
-import TableE from './TableE';
 import SpinnerC from './SpinnerC';
 import './Add.css'
 
-import { getAllEmployees, getAllTasks, toremoveEmployee, toremoveTask } from '../Service/allAPI';
+import { getAllTasks, toremoveTask } from '../Service/allAPI';
 import TableT from './TableT';
 import { deleteContext, editContext, registerContext } from '../taskContext/ContextShare';
 function Home() {
@@ -77,20 +76,20 @@ function Home() {
       {/* CS9 then goto index.js */}
       {
         registerData ? <Alert variant="success" dismissible className='w-25 container'>
-          {registerData.fname} Added Successfully....
+          {registerData.ttask} Added Successfully....
         </Alert> : ''
       }
       {/* REAS6 over*/}
       {
         deleteData ? <Alert variant="danger" dismissible className='w-25 container'>
-          {deleteData.fname} Delete Successfully....
+          {deleteData.ttask} Delete Successfully....
         </Alert> : ''
       }
 
       {/* REAS6 over*/}
       {
         editData ? <Alert variant="info" dismissible className='w-25 container'>
-          {editData.fname} Edit Successfully....
+          {editData.ttask} Edit Successfully....
         </Alert> : ""
       }
       <Container>
@@ -121,7 +120,7 @@ function Home() {
         {/* loadingStep5 true:false*/}
         {
           // GES9 then goto tableE.js  RES6 then goto tableE.js
-          showSpain ? <TableT tasksToDisplay={allTasks} removerEmp={deleteTask}>  </TableT> : <SpinnerC></SpinnerC>
+          showSpain ? <TableT tasksToDisplay={allTasks} removerTak={deleteTask}>  </TableT> : <SpinnerC></SpinnerC>
 
         }
       </Container>

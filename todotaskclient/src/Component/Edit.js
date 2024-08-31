@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import './Add.css'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 import { editTask, getSingleTask } from '../Service/allAPI';
 
@@ -11,9 +11,6 @@ import { editTask, getSingleTask } from '../Service/allAPI';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
-import Alert from 'react-bootstrap/Alert';
-import BASE_URL from '../Service/Base_url';
 import { editContext } from '../taskContext/ContextShare';
 
 function Edit() {
@@ -23,42 +20,23 @@ function Edit() {
   // EEAS4 access from context share.js
   const { editData, setEditData } = useContext(editContext)
 
-  //HEIS1 create state to hold existing image
-  const [existingImg, setExistingImg] = useState("")
   // EUES6 access params
   const params = useParams().id
   // const {id}=useParams()
   console.log(params);
 
   // EUES7 api call & save
-  const getTaskData = async () => {
-    let { data } = await getSingleTask(params)
-    setUserData(data)
-    // setImage(data.profile)
-    // HEIS2 
-    setExistingImg(data.profile)
-
-
-
-  }
-
-  // HEIS3
-  console.log(existingImg);
+  
 
   // EUES5 new useEffect
   useEffect(() => {
     // EUES8 then goto HTML line 195
-    getTaskData()
+    // getTaskData()
   }, [])
 
   // CS6 to get context then goto home.js 
   // const { registerData, setRegisterData } = useContext(registerContext)
 
-  //ACS4 state to store preview image as URL
-  const [preview, setPreview] = useState("")
-
-  // ACS1 state to hold image data
-  const [Image, setImage] = useState("")
 
   // ATS5 create navigate
   const navigate = useNavigate()
@@ -88,26 +66,8 @@ function Edit() {
   // ACS12
   console.log(userData);
 
-  //ACS3 create a funcation to store image
-  // const setProfile = (e) => {
-  //   // console.log(e.target.files[0]);
-  //   setImage(e.target.files[0]);
-  // }
 
 
-
-  // ACS5 to acess when it open
-  // useEffect(() => {
-  //   if (Image) {
-
-  //     // HEIS4 if user input new image is seleted then reset the existing image
-  //     setExistingImg("")
-
-  //     setPreview(URL.createObjectURL(Image))//file to URL
-  //   }
-  // }, [Image])
-
-  // console.log(preview);
   //  ACS20
   // 20.1 create a funcation for submit button we need header & body
   const handleEdit = async (e) => {
@@ -135,9 +95,6 @@ function Edit() {
     }
     else {
       // 20.5 add datas in formdata using methods
-      // SD2
-      // data.append('user_profile', Image||existingImg)
-      // Image ? data.append('user_profile', Image) : data.append('user_profile', existingImg)
       data.append('ttask', ttask)
       data.append('dtask', dtask)
       data.append('status', status)
@@ -156,24 +113,6 @@ function Edit() {
         // EEAS5 
         setEditData(response)
 
-        // console.log(response.data);
-        // alert("Employee Updated")
-
-        //   // ATS7 line no 127
-        //   setUserData({
-        //     ...userData,
-        //     fname: "",
-        //     lname: "",
-        //     email: "",
-        //     mobile: "",
-        //     gender: "",
-        //     status: "",
-        //     location: ""
-        //   })
-
-        //   setImage("")
-
-        // ATS6 red
         navigate("/")
 
       }
@@ -193,10 +132,6 @@ function Edit() {
         <h1 className='text-center text-light'><strong>Edit <span style={{ color: '#BAFF39' }}>Employee Details</span></strong></h1>
         <div className='mt-5 m-5 p-5' id='box1' style={{ fontWeight: 'bold' }}>
         <Row>
-            <div>
-              {/* ACS6 to access the image */}
-              {/* <img src={preview ? preview : "https://i.postimg.cc/Mp4NRLKm/profile.jpg"} alt="" style={{ width: '25%', marginLeft: '40%' }} /> */}
-            </div>
             <Col xs={12} sm={12} md={6} lg={6} xl={6} className='p-5'>
               {/* ACS8 to call funcation*/}
               {/* Title */}

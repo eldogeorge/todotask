@@ -7,12 +7,6 @@ const express=require ('express')
 const { taskRegister, getAllTasks, getSingleTask, toRemoveTask, editTask } = require('../Controllers/logic')
 
 
-// SEDS2
-const { taskRegister } = require('../Controllers/logic')
-
-
-
-
 //PS2 line 16create an object for Router class in express
 //  varname  inside express router class is imported
 const router=new express.Router()
@@ -37,7 +31,7 @@ router.delete('/tasks/toRemoveTask/:id',toRemoveTask)
 
 // router request to update/edit employee
 // EUES1 edit employee then goto logic.js                          EUES3 import editEmployee then goto clientServer->edit.js
-router.put('/tasks/updateTask/:id',upload.single('user_profile'),editTask)
+router.put('/tasks/updateTask/:id',editTask)
 // .. other request
 
 //PS3 export router

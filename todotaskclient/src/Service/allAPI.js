@@ -19,15 +19,15 @@ export const getAllTasks=async(search)=>{
 
 // GSES5 get single employee,then goto view.js
 export const getSingleTask=async(id)=>{
-    return await commonRequest("GET",`${BASE_URL}/employees/singleTaskDetail/${id}`,"")
+    return await commonRequest("GET",`${BASE_URL}/tasks/singleTaskDetail/${id}`,"")
 }
 
 // RES4  then goto home.js
 export const toremoveTask=async(id)=>{
-    return await commonRequest("DELETE",`${BASE_URL}/employees/toRemoveTask/${id}`,{})
+    return await commonRequest("DELETE",`${BASE_URL}/tasks/toRemoveTask/${id}`,{})
 }
 
 // SD4 update employee then goto edit.js
 export const editTask=async(id,header,body)=>{
-    return await commonRequest("PUT",`${BASE_URL}/employees/updateTask/${id}`,body, header)
+    return await commonRequest("PUT",`${BASE_URL}/tasks/updateTask/${id}`,body, header)
 }

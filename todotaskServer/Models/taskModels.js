@@ -11,12 +11,12 @@ const taskSchema=new mongoose.Schema({
         // *require
         required:true,
         // to remove white space backend vailation
-        trim:true
+        // trim:true
     },
     dtask:{
         type:String,
         required:true,
-        trim:true
+        // trim:true
     },
     status:{
         type: String,
