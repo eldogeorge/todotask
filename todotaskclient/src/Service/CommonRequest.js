@@ -4,11 +4,11 @@ import axios from "axios"
 
 // CAS1 line21 then goto allAPI.js
 
-export const commonRequest = async (method, url, body, header) => {//await not use bcz of return
+export const commonRequest = async (method, url, body) => {//await not use bcz of return
     let config = {
         method,
         url,
-        headers: header ? header : "application/json",
+        // headers: header ? header : "application/json",
         data: body
     }
     return axios(config).then(response => {

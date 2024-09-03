@@ -3,7 +3,7 @@
  const mongoose= require('mongoose')
         // asym.connect portName.URLName
  mongoose.connect(process.env.baseurl,{
-    // parser issue, remove connect error
+    // parser issue, network remove connect error
     useNewUrlParser:true,
     //topology issue,
     useUnifiedTopology:true

@@ -5,8 +5,8 @@ import { commonRequest } from "./CommonRequest"
 
 // register
 // AAS2
-export const registerAPI=async(header,body)=>{//bcz async commonRequest
-    return await commonRequest("POST",`${BASE_URL}/tasks/register`,body,header)
+export const registerAPI=async(body)=>{//bcz async commonRequest
+    return await commonRequest("POST",`${BASE_URL}/tasks/addRegister`,body)
 }
 
 //GES 4 get all tasks          becz no file type data 
@@ -28,6 +28,6 @@ export const toremoveTask=async(id)=>{
 }
 
 // SD4 update employee then goto edit.js
-export const editTask=async(id,header,body)=>{
-    return await commonRequest("PUT",`${BASE_URL}/tasks/updateTask/${id}`,body, header)
+export const editTask=async(id,body)=>{
+    return await commonRequest("PUT",`${BASE_URL}/tasks/updateTask/${id}`,body)
 }

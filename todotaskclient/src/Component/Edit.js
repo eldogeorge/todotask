@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Alert, Button, Col, Container, Row } from 'react-bootstrap'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import './Add.css'
@@ -25,32 +25,34 @@ function Edit() {
   // const {id}=useParams()
   console.log(params);
 
-  // EUES7 api call & save
-  
-
-  // EUES5 new useEffect
-  useEffect(() => {
-    // EUES8 then goto HTML line 195
-    // getTaskData()
-  }, [])
-
-  // CS6 to get context then goto home.js 
-  // const { registerData, setRegisterData } = useContext(registerContext)
-
 
   // ATS5 create navigate
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
 
   // ATES2 state to hold error reponse
-  // const [errorMsg, setErrorMsg] = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
 
 
   // ACS7 state to hold all other input datas enter by user
   const [userData, setUserData] = useState({
     ttask: "",
     dtask: "",
-    status: ""
-  })
+    statu: ""
+  });
+  // EUES7 api call & save
+  const getTaskData = async () => {
+    let { data } = await getSingleTask(params)
+    setUserData(data)
+  }
+
+  // EUES5 new useEffect
+  useEffect(() => {
+
+    // EUES8 then goto HTML line 195
+    getTaskData()
+  }, [params])
+
 
   // ACS9 funcation to updata userData
   const userDetails = (e) => {
@@ -73,65 +75,64 @@ function Edit() {
   const handleEdit = async (e) => {
     e.preventDefault()
 
-    //20.2 header - contentType:multipart/formData
-    const headerConfig = {
-      "Content-Type": "multipart/form-data"
-    }
-    //20.3 body form data
-    const data = new FormData()
+    const { ttask, dtask, statu } = userData
 
-    //20.4 Access datas from userData using destrut
-    const { ttask, dtask, status } = userData
-
-    // ATS4 line no. 120
     if (ttask == "") {
-      toast.error('Task Title Required')
+      toast.error('Title Task required')
     }
     else if (dtask == "") {
-      toast.error('Task Description Required')
+      toast.error('Task Description required')
+
     }
-    else if (status == "") {
-      toast.error('Task status Required')
+    else if (statu == "") {
+      toast.error('Task Status required')
+
     }
+
     else {
-      // 20.5 add datas in formdata using methods
-      data.append('ttask', ttask)
-      data.append('dtask', dtask)
-      data.append('status', status)
+      const requestData = {
+        ttask,
+        dtask,
+        statu
+      };
 
-      // SD3 then goto all api.js
-      console.log(data);
+      try {
+        const response = await editTask(params, requestData);
 
-      // 20.6 api call        SD5
-      const response = await editTask(params, headerConfig, data)
-      console.log(response);
-      if (response.status == 204) {
+        if (response.status === 205) {
+          setEditData(response.data);
+          setEditData(response)
 
-        // CS7 update context
-        // setRegisterData(response.data)  // data means newEmployees objects in server
 
-        // EEAS5 
-        setEditData(response)
+          // Clear form data
+          setUserData({
+            ttask: "",
+            dtask: "",
+            statu: ""
+          });
+          // setErrorMsg("Task Update Successfully")
 
-        navigate("/")
-
-      }
-      else {
-        alert("Task Update failed")
-        // console.log(response.response.data);
-        // ATES3
-        // setErrorMsg(response.response.data)
+          navigate("/");
+        }
+        else {
+          setErrorMsg("Task Update failed");
+        }
+      } catch (error) {
+        console.error("Error submitting form: ", error);
+        setErrorMsg("Error updating task.");
       }
     }
-
   }
+
+
   return (
 
     <div >
+
       <Container>
-        <h1 className='text-center text-light'><strong>Edit <span style={{ color: '#BAFF39' }}>Employee Details</span></strong></h1>
+        <h1 className='text-center text-light'><strong>Edit <span style={{ color: '#BAFF39' }}>Task Details</span></strong></h1>
         <div className='mt-5 m-5 p-5' id='box1' style={{ fontWeight: 'bold' }}>
-        <Row>
+          <Row>
             <Col xs={12} sm={12} md={6} lg={6} xl={6} className='p-5'>
               {/* ACS8 to call funcation*/}
               {/* Title */}
@@ -141,7 +142,7 @@ function Edit() {
                 className="mb-5 fa w-100"
               >
                 {/* ACS10 */}
-                <Form.Control name="ttask" type="text" placeholder="What's the task title?" />
+                <Form.Control value={userData.ttask} onChange={userDetails} name="ttask" type="text" placeholder="What's the task title?" />
               </FloatingLabel>
 
               {/* description */}
@@ -151,18 +152,18 @@ function Edit() {
                 className="mb-5 fa w-100"
               >
                 {/* ACS10 */}
-                <Form.Control name="dtask" type="text" placeholder="What's the task description?" />
+                <Form.Control value={userData.dtask} onChange={userDetails} name="dtask" type="text" placeholder="What's the task description?" />
               </FloatingLabel>
             </Col>
             <Col xs={12} sm={12} md={6} lg={6} xl={6} className='p-5'>
               <Form.Group required as={Col} controlId="formGridState" className='mb-5 fa w-100'>
                 <Form.Label>Select Task Status</Form.Label>
                 {/*ACS16 */}
-                <Form.Select onChange={userDetails} name="status" defaultValue="Choose...">
+                <Form.Select value={userData.statu} onChange={userDetails} name="statu" defaultValue="Choose...">
                   <option>Select...</option>
                   {/*ACS17  */}
-                  <option value={'active'}>To-Do-Task</option>
-                  <option value={'inactive'}>Completed</option>
+                  <option value={'todotask'}>To-Do-Task</option>
+                  <option value={'completed'}>Completed</option>
                 </Form.Select>
               </Form.Group>
             </Col>

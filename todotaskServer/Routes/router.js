@@ -4,7 +4,7 @@
 
 //PS1.2 import express
 const express=require ('express')
-const { taskRegister, getAllTasks, getSingleTask, toRemoveTask, editTask } = require('../Controllers/logic')
+const { getAllTasks, getSingleTask, toRemoveTask, editTask, todotaskRegister } = require('../Controllers/logic')
 
 
 //PS2 line 16create an object for Router class in express
@@ -12,7 +12,7 @@ const { taskRegister, getAllTasks, getSingleTask, toRemoveTask, editTask } = req
 const router=new express.Router()
 
 // register tasks - post request  //SEDS3                   // SEDS2
-router.post('/tasks/register',taskRegister)
+router.post('/tasks/addRegister',todotaskRegister)
 
 
 // api request tasks in a table 

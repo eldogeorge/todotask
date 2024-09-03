@@ -30,9 +30,7 @@ server.use(router)
 
 // SC6 to create port to link 
                 // to set port MS 4 goto connections.js
-const port=8000 || process.env.port
-
-// GEIS1 export uploads folder to client
+const port=8500 || process.env.port
 
 server.listen(port,()=>{
     console.log(`--------To-Do-Task Server started At Port Number ${port}--------`);

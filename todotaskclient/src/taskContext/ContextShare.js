@@ -22,7 +22,7 @@ function ContextShare({ children }) {
   const [editData, setEditData] = useState("")
   return (
     <div>
-      {/* EEAS3 then goto eit.js */}
+      {/* EEAS3 then goto edit.js */}
       <editContext.Provider value={{ editData, setEditData }}>
         {/* REAS3 till closing tag,then goto home.js (to share) */}
         <deleteContext.Provider value={{ deleteData, setdeleteData }}>
