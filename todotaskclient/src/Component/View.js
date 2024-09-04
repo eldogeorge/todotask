@@ -41,7 +41,7 @@ function View() {
           </Card.Body>
           <Card.Body>
             <p className='text-center' style={{ fontWeight: 'bolder', color: '#BCFD4C' }}>{singleTask.dtask}</p>
-            <p className='text-center' style={{ fontWeight: 'bolder', color: '#BCFD4C' }}>{singleTask.status}</p>
+            <p className='text-center' style={{ fontWeight: 'bolder', color: '#BCFD4C' }}>{singleTask.statu}</p>
           </Card.Body>
         </Card>:
         <p>Task Not Found </p>

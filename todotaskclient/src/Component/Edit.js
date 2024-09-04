@@ -100,9 +100,12 @@ function Edit() {
         const response = await editTask(params, requestData);
 
         if (response.status === 205) {
-          setEditData(response.data);
-          setEditData(response)
-
+          // setEditData(response.data);
+          // setEditData(response)
+          console.log(response.config.data);
+          setEditData(JSON.parse(response.config.data))
+          console.log(userData);
+          
 
           // Clear form data
           setUserData({
@@ -118,7 +121,7 @@ function Edit() {
           setErrorMsg("Task Update failed");
         }
       } catch (error) {
-        console.error("Error submitting form: ", error);
+        // console.error("Error submitting form: ", error);
         setErrorMsg("Error updating task.");
       }
     }
@@ -179,7 +182,7 @@ function Edit() {
         </div>
       </Container>
       {/* ATS3 */}
-      <ToastContainer position="top-center" theme="dark" />
+      <ToastContainer autoClose={1000} position="top-center" theme="dark"  />
     </div>
   )
 }

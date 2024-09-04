@@ -37,7 +37,8 @@ function TableT({ tasksToDisplay, removerTak }) {
                         <td>{i.dtask}</td>
                         <td>
                           <div style={{ backgroundColor: '#BAFF39', color: 'black', fontWeight: 'bold', borderEndEndRadius: '10px' }} className='text-center p-2 w-75'>
-                            {i.statu} <i class="fa-solid fa-angle-down fa-bounce ms-2"></i>
+                            {i.statu} 
+                            {/* <i class="fa-solid fa-angle-down fa-bounce ms-2"></i> */}
                           </div>
                         </td>
                         <td>
