@@ -164,12 +164,12 @@ function Add() {
       {
         //ATES4  
         errorMsg ? <Alert variant="dark" dismissible onClose={() => setErrorMsg("")}>
-          {/* <Button onClose={() => setErrorMsg("")}>Show Alert</Button>; */}
+          <Button onClose={() => setErrorMsg("")}>Show Alert</Button>;
           {errorMsg}
         </Alert> : ""
       }
       <Container>
-        <h1 className='text-center text-light'><strong>Register <span style={{ color: '#BAFF39' }}>Task Details</span></strong></h1>
+        <h1 className='text-center text-light'><strong>Add <span style={{ color: '#BAFF39' }}>Task Details</span></strong></h1>
         <div className='mt-5 m-5 p-5' id='box1' style={{ fontWeight: 'bold' }}>
           <Row>
             <Col xs={12} sm={12} md={6} lg={6} xl={6} className='p-5'>
@@ -215,6 +215,7 @@ function Add() {
           </div>
         </div>
       </Container>
+
       {/* ATS3 */}
       <ToastContainer position="top-center" theme="dark" autoClose={8000} />
     </div>

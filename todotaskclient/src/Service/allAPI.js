@@ -17,6 +17,12 @@ export const getAllTasks=async(search)=>{
     return await commonRequest("GET",`${BASE_URL}/tasks/getTasksDetails?tosearch=${search}`,"")//search=${search}
 }
 
+// filter task
+export const filterTasks=async(statu)=>{
+    // here body is empety and header will take default apllication/json as empet string
+        // SSDS6 query paremneter  then goto home.js
+return await commonRequest("GET",`${BASE_URL}/tasks/getTasksDetails?tofilter=${statu}`,"")//search=${search}
+}
 // GSES5 get single employee,then goto view.js
 export const getSingleTask=async(id)=>{
     return await commonRequest("GET",`${BASE_URL}/tasks/singleTaskDetail/${id}`,"")

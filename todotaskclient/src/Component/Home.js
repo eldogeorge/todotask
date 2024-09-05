@@ -1,195 +1,183 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Alert, Col, Container, Row } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { Link } from 'react-router-dom';
 import SpinnerC from './SpinnerC';
-import './Add.css'
 import { ToastContainer, toast } from 'react-toastify';
-import { getAllTasks, toremoveTask } from '../Service/allAPI';
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toastify
+import { filterTasks, getAllTasks, toremoveTask } from '../Service/allAPI';
 import TableT from './TableT';
 import { deleteContext, editContext, registerContext } from '../taskContext/ContextShare';
+
 function Home() {
+  const [search, setSearch] = useState("");
+  const [allTasks, setAllTasks] = useState([]);
+  const [showSpain, setSpain] = useState(false);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filterStatus, setFilterStatus] = useState("all");
 
-  // SSDS1 state to store search data then goto line 80
-  const [search, setSearch] = useState("")
-  // GES 5 create state to store all employees usestate []bcz res will be array of object
-  const [allTasks, setAllTasks] = useState([])
+  const { editData, setEditData } = useContext(editContext);
+  const { registerData, setRegisterData } = useContext(registerContext);
+  const { deleteData, setdeleteData } = useContext(deleteContext);
 
-
-  // EEAS4 access from context share.js
-  const { editData, setEditData } = useContext(editContext)
-
-  // CS8 to get context & import registerContext also
-  const { registerData, setRegisterData } = useContext(registerContext)
-
-  // REAS4 to access context
-  const { deleteData, setdeleteData } = useContext(deleteContext)
-
-  // loadingStep2
-  // state to handle the spain 
-  const [showSpain, setSpain] = useState(false)
-
-  // timeout 
-  const [showAlertAdd, setShowAlertAdd] = useState(true);
-  const [showAlertEdit, setShowAlertEdit] = useState(true);
-  const [showAlertDelete, setShowAlertDelete] = useState(true);
-
-
-  // useEffect(() => {
-  //   if (editData) {
-  //     setShowAlertEdit(true);  // Show alert when editData is available
-  //     const timer = setTimeout(() => {
-  //       setShowAlertEdit(false)
-  //     }, 3000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [editData]);
-
-  // useEffect(() => {
-  //   if (deleteData) {
-  //     setShowAlertDelete(true);  // Show alert when deleteData is available
-  //     const timer = setTimeout(() => {
-  //       setShowAlertDelete(false)
-  //     }, 3000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [deleteData]);
-
-  // useEffect(() => {
-  //   if (registerData) {
-  //     setShowAlertAdd(true);  // Show alert when registerData is available
-  //     const timer = setTimeout(() =>{ 
-  //       setShowAlertAdd(false)
-  //     }, 3000);
-  //     return () => clearTimeout(timer);// Cleanup the timer on component unmount
-  //   }
-  // }, [registerData]);
-  // Effect for handling alert timeouts
-  useEffect(() => {
-    let timer;
-
-    if (editData) {
-      timer = setTimeout(() => setShowAlertEdit(false), 2000); // Edit alert timeout
-    }
-    if (deleteData) {
-      timer = setTimeout(() => setShowAlertDelete(false), 2000); // Delete alert timeout
-    }
-    if (registerData) {
-      timer = setTimeout(() => setShowAlertAdd(false), 2000); // Add alert timeout
-    }
-
-    return () => clearTimeout(timer); // Cleanup on component unmount
-  }, [editData, deleteData, registerData]);
-
-  // GES6.1 create funcation to api call to get all employees
   const getTasks = async () => {
-    // SSDS4 then goto allapi.js
-    const response = await getAllTasks(search)
-    // GES6.2 goto useEffect to access at loading time
-    // console.log(response.data);
-    setAllTasks(response.data)
-  }
-  // GES8 
-  console.log(allTasks);
+    const response = await getAllTasks(search);
+    setAllTasks(response.data);
+  };
 
-
-  // console.log(data);
-
-  // SSDS3 then goto line 33
-  console.log(search);
-
-  //RES5 funcation to delete task then goto down
   const deleteTask = async (id) => {
-    const { data } = await toremoveTask(id)
-    // REAS5 then goto line 68
-    setdeleteData(data)
-    // refresh the table content
-    getTasks()
-  }
+    const { data } = await toremoveTask(id);
+    setdeleteData(data);
+    getTasks();
+  };
 
+  // const filteredTasks = allTasks.filter((ttask) => {
+  //   if (filterStatus === 'all' ) return true;
+  //   return ttask.statu === filterStatus;
+  // });
+  // // Filter tasks based on the status
+  // const filteredTasks = allTasks.filter((task) => {
+  //   if (filterStatus === 'all') return true;
+  //   if (filterStatus === 'TodoTask') return task.status === 'TodoTask';
+  //   if (filterStatus === 'Completed') return task.status === 'Completed';
+  //   return false;
+  // });
+  // Filter tasks based on status
+  // const filterTasksByStatus = () => {
+  //   if (filterStatus === 'all') {
+  //     setFilteredTasks(allTasks);
+  //   } else {
+  //     const filtered = allTasks.filter(task => task.status === filterStatus);
+  //     setFilteredTasks(filtered);
+  //     console.log(allTasks.statu.statu);
+  //   }
+  // };
 
-  // loadingStep1
+  // // Debugging to check tasks and filter status
+  // useEffect(() => {
+  //   console.log('All Tasks:', allTasks);
+  //   console.log('Filtered Tasks:', filteredTasks);
+  //   console.log('Filter Status:', filterStatus);
+  // }, [allTasks, filteredTasks, filterStatus]);
+
+  // Trigger toast notifications for edit, delete, and add actions
   useEffect(() => {
-    // GES7 call the funcation
-    getTasks()
-    // loadingStep3
+    if (editData) {
+      toast.info(`${editData.ttask} Edited Successfully`, { autoClose: 3000 });
+      const timer = setTimeout(() => {
+        setEditData(null); // Reset editData after showing the alert
+      }, 3000);
+      return () => clearTimeout(timer); // Cleanup timer on component unmount
+    }
+  }, [editData, setEditData]);
+
+  useEffect(() => {
+    if (deleteData) {
+      toast.error(`${deleteData.ttask} Deleted Successfully`, { autoClose: 3000 });
+      const timer = setTimeout(() => {
+        setdeleteData(null); // Reset deleteData after showing the alert
+      }, 3000);
+      return () => clearTimeout(timer); // Cleanup timer on component unmount
+    }
+  }, [deleteData, setdeleteData]);
+
+  useEffect(() => {
+    if (registerData) {
+      toast.success(`${registerData.ttask} Added Successfully`, { autoClose: 3000 });
+      const timer = setTimeout(() => {
+        setRegisterData(null); // Reset registerData after showing the alert
+      }, 3000);
+      return () => clearTimeout(timer); // Cleanup timer on component unmount
+    }
+  }, [registerData, setRegisterData]);
+
+  useEffect(() => {
+    getTasks();
     setTimeout(() => {
-      setSpain(true)
+      setSpain(true);
     }, 2000);
-    // SSDS7 then goto server part file logic.js
-  }, [search])
+  }, [search]);
 
   // useEffect(() => {
-  //   if (deleteData) {
-  //     setShowAlertDelete(true);  // Show alert when deleteData is available
-  //     const timer = setTimeout(() => {
-  //       setShowAlertDelete(false)
-  //     }, 2000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [deleteData]);
-  // loadingStep4
-  // console.log(showSpain);
+  //   filterTasksByStatus(); // Re-apply filter whenever tasks or status changes
+  // }, [allTasks, filterStatus]);
   return (
-    <div >
-      {/* CS9 then goto index.js */}
-      {
-        registerData && showAlertAdd && (<Alert variant="success" dismissible className='w-25 container'>
-          {registerData.ttask} Added Successfully....
-        </Alert> || []
-        )
-      }
+    <div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick />
 
-      {/* REAS6 over*/}
-      {
-        editData && showAlertEdit && (<Alert variant="info" dismissible className='w-25 container'>
-          {editData.ttask} Edit Successfully....
-        </Alert> || []
-        )
-      }
-      {/* REAS6 over*/}
-      {
-        deleteData && showAlertDelete && (<Alert variant="danger" dismissible className='w-25 container'>
-          {deleteData.ttask} Delete Successfully....
-        </Alert> || []
-        )
-      }
       <Container>
         <Row>
-          <Col xs={12} sm={6} md={4} lg={3} xl={6} className='mt-5'>
+          {/* Search input */}
+          <Col xs={12} sm={6} md={4} lg={3} xl={6} className="mt-5">
             <FloatingLabel
-              // SSDS2  then goto line 42
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               controlId="floatingInput"
               label="Search Task Title Here"
-              className="mb-4  d-inline-flex" style={{ width: '55%' }}
+              className="mb-4 d-inline-flex"
+              style={{ width: '55%' }}
             >
               <Form.Control type="type" placeholder="Task Title" />
-
             </FloatingLabel>
-            <Button variant="" style={{ backgroundColor: '#BAFF39' }} className='ms-3 w-25 ' id="button-addon2 btn">
-              <i class="fa-solid fa-magnifying-glass fa-fade me-3"></i><span className='fs-4'>Search</span>
+            <Button
+              variant=""
+              style={{ backgroundColor: '#BAFF39' }}
+              className="ms-3 w-25"
+              id="button-addon2 btn"
+              onClick={getTasks}
+            >
+              <i className="fa-solid fa-magnifying-glass fa-fade me-3"></i>
+              <span className="fs-4">Search</span>
             </Button>
           </Col>
-          <Col xs={12} sm={6} md={4} lg={3} xl={6} className='mt-5' style={{ textAlign: 'end' }} >
+
+          {/* Add task button */}
+          <Col xs={12} sm={6} md={4} lg={3} xl={6} className="mt-5" style={{ textAlign: 'end' }}>
             <Link to={'/add'}>
               <Button variant="" style={{ backgroundColor: '#BAFF39' }} id="button-addon2">
-                <i class="fa-solid fa-user-plus fa-shake"></i> Add
+                <i className="fa-solid fa-user-plus fa-shake"></i> Add
               </Button>
             </Link>
           </Col>
         </Row>
-        {/* loadingStep5 true:false*/}
-        {
-          // GES9 then goto tableE.js  RES6 then goto tableE.js
-          showSpain ? <TableT tasksToDisplay={allTasks} removerTak={deleteTask}>  </TableT> : <SpinnerC></SpinnerC>
 
-        }
+        {/* Filter buttons */}
+        {/* <Row className="my-3">
+          <Col xs={12}>
+            <Button
+              variant={filterStatus === 'all' ? 'primary' : 'outline-primary'}
+              onClick={() => setFilterStatus('all')}
+              className="me-2"
+            >
+              All Tasks
+            </Button>
+            <Button
+              variant={filterStatus === 'TodoTask' ? 'primary' : 'outline-primary'}
+              onClick={() => setFilterStatus('TodoTask')}
+              className="me-2"
+            >
+              Todo Tasks
+            </Button>
+            <Button
+              variant={filterStatus === 'Completed' ? 'primary' : 'outline-primary'}
+              onClick={() => setFilterStatus('Completed')}
+            >
+              Completed Tasks
+            </Button>
+          </Col>
+        </Row> */}
+
+        {/* Task list or spinner */}
+        {showSpain ? (
+          // <TableT tasksToDisplay={filteredTasks} removerTak={deleteTask} />
+          <TableT tasksToDisplay={allTasks} removerTak={deleteTask} />
+        ) : (
+          <SpinnerC />
+        )}
       </Container>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
