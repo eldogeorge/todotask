@@ -19,8 +19,6 @@ router.post('/tasks/addRegister',todotaskRegister)
 //GES1 get all employees- get request then goto logic.js, GES3(import getAllEmployees),then goto server-> allAPI.js
 router.get('/tasks/getTasksDetails',getAllTasks)
 
-// filter task
-router.get('/tasks/filterTask',filterTask)
 
 // router request single employyee in view
 // GSES2 get single employees- get request then goto logic.js, GSES4(import getSingleEmployees),then goto clientsserver-> allAPI.js

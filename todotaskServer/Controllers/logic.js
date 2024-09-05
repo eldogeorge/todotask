@@ -123,25 +123,6 @@ editTask = async (req, res) => {
     }
 }
 
-filterTask=async(req,res)=>{
-    try {
-        const status = req.query.statu || 'all'; // Get status from query params, default is 'all'
-        
-        let tasks;
-        
-        if (status === 'all') {
-          // Get all tasks if status is 'all'
-          tasks = await tasks.find({});
-        } else {
-          // Filter tasks by status
-          tasks = await tasks.find({ status: status });
-        }
-    
-        // Return tasks
-        res.status(200).json(tasks);
-      } catch (error) {
-        res.status(500).json({ message: 'Error fetching tasks', error });
-      }
-}
 
-module.exports = { todotaskRegister, getAllTasks, getSingleTask,filterTask, toRemoveTask, editTask }
+
+module.exports = { todotaskRegister, getAllTasks, getSingleTask, toRemoveTask, editTask }

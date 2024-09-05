@@ -7,60 +7,50 @@ import { Link } from 'react-router-dom';
 import SpinnerC from './SpinnerC';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toastify
-import { filterTasks, getAllTasks, toremoveTask } from '../Service/allAPI';
+import { getAllTasks, toremoveTask } from '../Service/allAPI';
 import TableT from './TableT';
 import { deleteContext, editContext, registerContext } from '../taskContext/ContextShare';
 
 function Home() {
+  // useState
   const [search, setSearch] = useState("");
   const [allTasks, setAllTasks] = useState([]);
   const [showSpain, setSpain] = useState(false);
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filterTasks, setFilteredTasks] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
 
+  // usecontext
   const { editData, setEditData } = useContext(editContext);
   const { registerData, setRegisterData } = useContext(registerContext);
   const { deleteData, setdeleteData } = useContext(deleteContext);
-
+ 
+  // to search
   const getTasks = async () => {
+    // api call from getAllTask
     const response = await getAllTasks(search);
     setAllTasks(response.data);
   };
 
+  // to delete id params
   const deleteTask = async (id) => {
+
     const { data } = await toremoveTask(id);
     setdeleteData(data);
     getTasks();
   };
 
-  // const filteredTasks = allTasks.filter((ttask) => {
-  //   if (filterStatus === 'all' ) return true;
-  //   return ttask.statu === filterStatus;
-  // });
-  // // Filter tasks based on the status
-  // const filteredTasks = allTasks.filter((task) => {
-  //   if (filterStatus === 'all') return true;
-  //   if (filterStatus === 'TodoTask') return task.status === 'TodoTask';
-  //   if (filterStatus === 'Completed') return task.status === 'Completed';
-  //   return false;
-  // });
-  // Filter tasks based on status
-  // const filterTasksByStatus = () => {
-  //   if (filterStatus === 'all') {
-  //     setFilteredTasks(allTasks);
-  //   } else {
-  //     const filtered = allTasks.filter(task => task.status === filterStatus);
-  //     setFilteredTasks(filtered);
-  //     console.log(allTasks.statu.statu);
-  //   }
-  // };
 
-  // // Debugging to check tasks and filter status
-  // useEffect(() => {
-  //   console.log('All Tasks:', allTasks);
-  //   console.log('Filtered Tasks:', filteredTasks);
-  //   console.log('Filter Status:', filterStatus);
-  // }, [allTasks, filteredTasks, filterStatus]);
+  // Filter tasks based on status
+  const filterTasksByStatus = () => {
+    if (filterStatus === 'all') {
+      setFilteredTasks(allTasks);
+    } 
+    else {
+      const filtered = allTasks.filter(task => task.statu === filterStatus);
+      setFilteredTasks(filtered);
+      console.log(allTasks);
+    }
+  };
 
   // Trigger toast notifications for edit, delete, and add actions
   useEffect(() => {
@@ -94,15 +84,16 @@ function Home() {
   }, [registerData, setRegisterData]);
 
   useEffect(() => {
+    // api component
     getTasks();
     setTimeout(() => {
       setSpain(true);
     }, 2000);
   }, [search]);
 
-  // useEffect(() => {
-  //   filterTasksByStatus(); // Re-apply filter whenever tasks or status changes
-  // }, [allTasks, filterStatus]);
+  useEffect(() => {
+    filterTasksByStatus(); // Re-apply filter whenever tasks or status changes
+  }, [allTasks, filterStatus]);
   return (
     <div>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick />
@@ -143,7 +134,7 @@ function Home() {
         </Row>
 
         {/* Filter buttons */}
-        {/* <Row className="my-3">
+        <Row className="my-3">
           <Col xs={12}>
             <Button
               variant={filterStatus === 'all' ? 'primary' : 'outline-primary'}
@@ -153,25 +144,24 @@ function Home() {
               All Tasks
             </Button>
             <Button
-              variant={filterStatus === 'TodoTask' ? 'primary' : 'outline-primary'}
-              onClick={() => setFilterStatus('TodoTask')}
+              variant={filterStatus === 'todotask' ? 'primary' : 'outline-primary'}
+              onClick={() => setFilterStatus('todotask')}
               className="me-2"
             >
               Todo Tasks
             </Button>
             <Button
-              variant={filterStatus === 'Completed' ? 'primary' : 'outline-primary'}
-              onClick={() => setFilterStatus('Completed')}
+              variant={filterStatus === 'completed' ? 'primary' : 'outline-primary'}
+              onClick={() => setFilterStatus('completed')}
             >
               Completed Tasks
             </Button>
           </Col>
-        </Row> */}
-
+        </Row>
         {/* Task list or spinner */}
         {showSpain ? (
-          // <TableT tasksToDisplay={filteredTasks} removerTak={deleteTask} />
-          <TableT tasksToDisplay={allTasks} removerTak={deleteTask} />
+          <TableT tasksToDisplay={filterTasks} removerTak={deleteTask} />
+          // <TableT tasksToDisplay={allTasks} removerTak={deleteTask} />
         ) : (
           <SpinnerC />
         )}
