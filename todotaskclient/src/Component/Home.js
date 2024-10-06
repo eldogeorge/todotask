@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toastify
 import { getAllTasks, toremoveTask } from '../Service/allAPI';
 import TableT from './TableT';
 import { deleteContext, editContext, registerContext } from '../taskContext/ContextShare';
-
+// here Home means: homeTask, ttask means: titleTask,dtask means:descriptionTask, statu:taskStatus
 function Home() {
   // useState
   const [search, setSearch] = useState("");

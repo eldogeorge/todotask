@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import './Add.css'
 import { Link, useParams } from 'react-router-dom';
 import { getSingleTask } from '../Service/allAPI';
-
+// here View means: viewTask, ttask means: titleTask,dtask means:descriptionTask, statu:taskStatus
 function View() {
   // GSES6
   const params = useParams().id

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image } from 'react-bootstrap'
-// pnfStep1
+// pnfStep1 this page is use to page not found
 function Pnf() {
   return (
     <div>

@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Alert from 'react-bootstrap/Alert';
 import { registerContext } from '../taskContext/ContextShare';
-
+// here Add means: addTask, ttask means: titleTask,dtask means:descriptionTask, statu:taskStatus
 function Add() {
 
   // to get context
@@ -115,50 +115,6 @@ function Add() {
 
 
   return (
-    // <div>
-
-    //   {
-    //     errorMsg ? <div class="alert alert-danger  w-50 container" role="alert"
-    //       onClose={() => setErrorMsg("")} >
-    //       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    //       {errorMsg}
-    //     </div> : ""
-    //   }
-
-
-    //   <h3 style={{ color: '#2d0d80' }} className='text-center mt-3'>Create New Task</h3>
-
-    //   <form id='d' class='container  p-5 w-75 mt-2'>
-
-    //     <div className="row">
-    //       <div className="col-6">
-    //         <label for="exampleInputFname" class="form-label mt-3">Title Task</label>
-    //         <input onChange={userDetails} name='ttask' required type="text" class="form-control" id="exampleInputtitletask" />
-    //         <label for="exampleInputEmail" class="form-label mt-3">Description</label>
-    //         <input onChange={userDetails} name='dtask' required type="text" class="form-control" id="exampleInputdesctask" />
-    //       </div>
-    //       <div className="col-6">
-    //         {/* dropdown */}
-    //         <label for="exampleI" class="form-label mt-4">Task Status</label>
-
-    //         <select onChange={userDetails} name='statu' class="dropdown w-100 form-control" id="s1" >
-    //           <option class="dropdown-item disabled" aria-disabled="true" value="">Select ...</option>
-
-    //           <option class="dropdown-item" value={'todotask'}>To Do Task</option>
-    //           <option class="dropdown-item" value={'completed'}>Completed</option>
-    //         </select>   <br />
-    //       </div>
-    //     </div>
-    //     <div className='text-center mt-5'>
-    //       <button onClick={handleSubmit} style={{ backgroundColor: '#2d0d80', color: 'white' }}
-    //         type="submit" class="btn btn-primary w-50">Submit</button>
-
-    //     </div>
-    //   </form>
-
-    //   <ToastContainer position="top-center" theme="light" />
-    // </div>
-
     <div >
       {/* ATES1 */}
       {

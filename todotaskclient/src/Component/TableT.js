@@ -6,6 +6,7 @@ import './Add.css';
 import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 
+// here TableT means: tableTask, ttask means: titleTask,dtask means:descriptionTask, statu:taskStatus
 function TableT({ tasksToDisplay, removerTak }) {
   // State to manage task status (Complete or To Do)
   const [taskStatus, setTaskStatus] = useState(
@@ -47,7 +48,7 @@ function TableT({ tasksToDisplay, removerTak }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {tasksToDisplay.length > 0 ? tasksToDisplay.map((i, index) => (
+                  {tasksToDisplay.length > 0 ? tasksToDisplay.slice().reverse().map((i, index) => (
                     <tr className="table-Default" key={i._id}>
                       <th scope="row">{index + 1}</th>
                       <td>{i.ttask}</td>
